@@ -1,5 +1,5 @@
 # Reinforcement-Learning-for-A-Stock-Quant-Investiment
-  利用中国A股市场的数据训练的强化学习Agent。此Agent能够在一个长时间内自动择时和控制仓位，依照当前的参数设置，该强化学习Agent的交易行为是中长期交易行为模式。考虑TIME_STEPS个时间窗口的信息，进行投资行为，并在未来的特定时间内进行锁仓操作。本项目使用的强化学习算法为ASAC算法，本文工作主要借鉴[https://github.com/dongminlee94/deep_rl](https://github.com/dongminlee94/deep_rl)。
+  利用中国A股市场的数据训练强化学习Agent。此Agent能够在一个时间窗口内自动择时和控制仓位，依照当前的参数设置，该强化学习Agent的交易行为是中长期交易行为模式。考虑TIME_STEPS个时间窗口的信息，进行投资行为，并在未来的特定时间内进行锁仓操作。本项目使用的强化学习算法为ASAC算法，本文工作主要借鉴[https://github.com/dongminlee94/deep_rl](https://github.com/dongminlee94/deep_rl)。
 
 # Requirements
   1. Pytorch 1.4.0
@@ -34,7 +34,7 @@
   4. 运行asac_main.py；
   
   Note：由于当前ASAC算法的网络参数选取较小，当前的架构对于GPU没有强制需求。当前主要的问题受限于backtrader的回测速度。从强化学习的训练过程来看，当前的状态还远没有收敛，后续会陆续发布新训练的weights文件。
-
+  当前强化学习的训练过程包含无数backtrader的回测过程，在训练过程中可以追踪各指标的变化，从而设计不同的参数组合进行优化。
 
 
 
