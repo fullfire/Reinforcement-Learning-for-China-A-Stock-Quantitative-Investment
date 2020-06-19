@@ -23,9 +23,9 @@
   ![image](https://github.com/SchindlerLiang/Reinforcement-Learning-for-A-Stock-Quant-Investiment/blob/master/reward.png)
   对于大部分股票，其在最近300个交易日的收益大于0，14只股票的收益平均值为4.8%。
   
-  如下是一个近300天呈下跌趋势的股票的交易结果：
+  如下是一个近300天呈下跌趋势的股票的交易结果（开局80万，装备全靠割韭菜）：
   ![image](https://github.com/SchindlerLiang/Reinforcement-Learning-for-A-Stock-Quant-Investiment/blob/master/transaction.png)
-  可以看出即时在全年下跌趋势中，该智能体Agent依然能够抓住几次局部反弹的机会赚取投资利润。从上图也明显看出，该策略的股票购买时机把握较为精准，但是卖出时机还有较大的改进空间。
+  可以看出即使在全年下跌趋势中，该智能体Agent依然能够抓住几次局部反弹的机会赚取投资利润。从上图也明显看出，该策略的股票购买时机把握较为精准，但是卖出时机还有较大的改进空间。
   
   训练：
   1. 从tushare、baostock获取股票OHLCV等信息；
