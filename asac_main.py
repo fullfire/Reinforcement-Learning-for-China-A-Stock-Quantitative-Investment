@@ -52,18 +52,25 @@ class TestStrategy(bt.Strategy):
         self.last_stock_size = 0
         self.last_money = 0
         self.current_stock_size = 0
+        self.stock_total_cost = 0
         self.avg_stock_cost = self.data.close[0]
-
+        
     def notify_order(self, order):
         
         if order.status in [order.Submitted, order.Accepted]:
             return
         if order.status in [order.Completed]:
-            if order.isbuy(): 
+            if order.isbuy():
                 self.buyprice = order.executed.price
                 self.buycomm = order.executed.comm
+                self.stock_total_cost = self.stock_total_cost + order.executed.value
             else:  
-                pass
+                sell_size = - order.executed.size ## this is important, sell size is minus
+                if self.position.size == 0:
+                    self.stock_total_cost = 0
+                else:
+                    self.stock_total_cost = 1.0 * self.stock_total_cost * self.position.size / (sell_size + self.position.size )
+                    
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             self.log(order.status)
         self.order = None
@@ -110,9 +117,10 @@ class TestStrategy(bt.Strategy):
         self.last_money = self.broker.getcash()
         self.last_stock_size = self.position.size
         if self.position.size > 0:
-             self.avg_stock_cost = (self.broker.getvalue() - self.broker.getcash() ) / self.position.size
-
-             
+             self.avg_stock_cost = self.stock_total_cost / self.position.size
+        else:
+            self.avg_stock_cost = self.data.close[0]
+    
     def next(self):
         
         self.current_cold_day = self.current_cold_day - 1
@@ -180,7 +188,7 @@ def run_train():
     
     for file_index in range(len(file_name_list)):
             
-        try:
+#        try:
             file_name = file_name_list[file_index]
             file_path = os.path.join(data_folder,file_name)
             dataframe = pd.read_csv(file_path) 
@@ -209,10 +217,10 @@ def run_train():
             print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
             reward = cerebro.broker.getvalue() * 1.0 / 800000 -1
             final_value_list.append(reward)
-        except:
-            print(file_name_list[file_index])
-            continue
-        cerebro.plot()
+#        except:
+#            print(file_name_list[file_index])
+#            continue
+#        cerebro.plot()
 
 run_train()
     
